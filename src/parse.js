@@ -19,7 +19,8 @@ module.exports = function parseFile(inputFile) {
     arrayOfArrays.push(inputArray.split(","));
   });
 
-  console.log(arrayOfArrays);
+  // NOTE:  testing
+  // console.log(arrayOfArrays);
 
   return arrayOfArrays;
 };

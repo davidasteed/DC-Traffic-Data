@@ -16,7 +16,7 @@ Critical path:
   ~/project-name/$ node main.js January 2016
         done
   b.  main.js stores these arguments, and will pass them to the analysis functions
-      
+        done
 
   c.  main.js matches the desired filename as indicated by the month/year args (switch statement)
       - saves that filename in a variable
@@ -32,9 +32,6 @@ Critical path:
 
 
 
-
-
-
   calls parse.js
 
 
@@ -44,3 +41,10 @@ Critical path:
         - first, get parse.js to read in these args
 
   b.  save the month/year choice as a "control" variable.  
+
+
+
+  // loop logic for obtaining the fields with the maximum values
+  1.  determine property which has the maximum value
+  2.  check the current property value and see if the value matches
+  3.  copy that property/value to the "return object" as an object containing all of the matching objects
