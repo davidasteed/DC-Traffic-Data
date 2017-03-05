@@ -3,10 +3,6 @@
 let parking = require("./parking.js");
 let moving = require("./moving.js");
 
-// testing
-// let testParse = parse("./simple_data/moving_jan_2016.csv");
-
-
 // extract and store the command line options, if any.
 let argument1, argument2;
 if (process.argv[2]) {
@@ -64,14 +60,14 @@ if (argument2 !== validYear) {
    NOTE: command-line arguments are now considered valid */
 
 // obtain the parking results:
-let parkingCalculate = parking;
-let parkingResults = parkingCalculate(argument1, argument2);
+// let parkingCalculate = parking;
+// let parkingResults = parkingCalculate(argument1, argument2);
 
 // obtain the moving results:
 let movingCalculate = moving;
 let movingResults = movingCalculate(argument1, argument2);
-
-
-// NOTE: testing
-console.log("Parking results are: ", parkingResults);
+// //
+//
+// // NOTE: testing
+// console.log("Parking results are: ", parkingResults);
 console.log("Moving results are: ", movingResults);

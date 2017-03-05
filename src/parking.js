@@ -13,7 +13,7 @@ module.exports = function parkingAnalyzer(month, year) {
   // let validParkingFiles = ["parking_jan_2016.csv", "parking_feb_2016.csv", "parking_mar_2016.csv",
   //                       "parking_april_2016.csv", "parking_may_2016.csv"];
   //
-  let validParkingFiles = ["./data/parking_feb_2016.csv"];
+  let validParkingFiles = ["./simple_data/parking_feb_2016.csv"];
 
   // determine what input file to ask for
   let requestedDatafile;
