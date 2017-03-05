@@ -1,4 +1,4 @@
-module.exports = function parkingAnalyzer(month, year) {
+module.exports = function movingAnalyzer(month, year) {
   // this function will return an object that will contain the calculated answers
   let calculatedResults = {};
 
@@ -9,18 +9,18 @@ module.exports = function parkingAnalyzer(month, year) {
   // first, create a list of valid data files for input
   let validMonth = [ "January", "February", "March", "April", "May" ];
 
-  // NOTE NOTE NOTE:  replace with the real parking files
-  // let validParkingFiles = ["parking_jan_2016.csv", "parking_feb_2016.csv", "parking_mar_2016.csv",
-  //                       "parking_april_2016.csv", "parking_may_2016.csv"];
+  // NOTE NOTE NOTE:  replace with the real moving files
+  // let validMovingFiles = ["moving_jan_2016.csv", "moving_feb_2016.csv", "moving_mar_2016.csv",
+  //                       "moving_april_2016.csv", "moving_may_2016.csv"];
   //
-  let validParkingFiles = ["./simple_data/parking_feb_2016.csv"];
+  let validMovingFiles = ["./simple_data/moving_jan_2016.csv"];
 
   // determine what input file to ask for
   let requestedDatafile;
   validMonth.forEach(
     function getFileName() {
       if (month === "February"){
-        requestedDatafile = validParkingFiles[0];
+        requestedDatafile = validMovingFiles[0];
       }
     }
   );
@@ -31,11 +31,11 @@ module.exports = function parkingAnalyzer(month, year) {
   // strip out the subarray that contains the labels
   dataset.splice(0, 1);
 
-  // NOTE:  It is unknown why I have a empty subarray at the end of the parking array
-  //        Deleting the last (and empty) subarray from the parking array
+  // NOTE:  It is unknown why I have a empty subarray at the end of the moving array
+  //        Deleting the last (and empty) subarray from the moving array
   dataset.splice(dataset.length - 1, 1);
 
-  // Question 1:  "How many different types of parking tickets were issued?"
+  // Question 1:  "How many different types of moving tickets were issued?"
   // first, loop over the dataset and extract the property string values, and
   // store into their own array
   let allViolationCodes = [];
@@ -58,7 +58,7 @@ module.exports = function parkingAnalyzer(month, year) {
   // copy the calculated answer for Question #1 to the results object
   calculatedResults.totalUniqueViolationCodes = totalUniqueViolationCodes;
 
-  // Question 2:  What was the most common violation type for a parking ticket?
+  // Question 2:  What was the most common violation type for a moving ticket?
   // first, create an array with the property names
   let vcNames = Object.keys(counts);
 
@@ -91,7 +91,7 @@ module.exports = function parkingAnalyzer(month, year) {
   );
   calculatedResults.mostCommonViolationType = arrayOfHighest;
 
-  // Question 3:  skip the license plates for parking data per instructor
+  // Question 3:  skip the license plates for moving data per instructor
 
   return calculatedResults;
 };

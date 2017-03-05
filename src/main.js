@@ -1,6 +1,7 @@
 // obtain access to required files
-let parse = require("./parse.js");
-let parking = require(".parking.js");
+// let parse = require("./parse.js");
+let parking = require("./parking.js");
+let moving = require("./moving.js");
 
 // testing
 // let testParse = parse("./simple_data/moving_jan_2016.csv");
@@ -59,6 +60,18 @@ if (argument2 !== validYear) {
 /* NOTE:  We are going to pass the month argument value, for example, as "January" or "january".
    The called functions will NOT be checking the upper/lower case of the month value at all
    (and it shouldn't matter we hope)
-*/
 
-// command-line arguments are now considered valid
+   NOTE: command-line arguments are now considered valid */
+
+// obtain the parking results:
+let parkingCalculate = parking;
+let parkingResults = parkingCalculate(argument1, argument2);
+
+// obtain the moving results:
+let movingCalculate = moving;
+let movingResults = movingCalculate(argument1, argument2);
+
+
+// NOTE: testing
+console.log("Parking results are: ", parkingResults);
+console.log("Moving results are: ", movingResults);
