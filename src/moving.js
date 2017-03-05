@@ -31,15 +31,18 @@ module.exports = function movingAnalyzer(month, year) {
   // strip out the subarray that contains the labels
   dataset.splice(0, 1);
 
-  // NOTE:  It is unknown why I have a empty subarray at the end of the moving array
-  //        Deleting the last (and empty) subarray from the moving array
-  dataset.splice(dataset.length - 1, 1);
+  // // NOTE:  It is unknown why I have a empty subarray at the end of the moving array
+  // //        Deleting the last (and empty) subarray from the moving array
+  // dataset.splice(dataset.length - 1, 1);
 
-  // Question 1:  "How many different types of moving tickets were issued?"
+  //
+  // pre-work to answer question 1:
+  //
+  // store the different types of moving violation tickets that were issued
   // first, loop over the dataset and extract the property string values, and
   // store into their own array
   let allViolationCodes = [];
-  let arrayIndex = 9; // the ninth index is the VIOLATION_CODE
+  let arrayIndex = 17; // index for VIOLATION_CODE
   for (let i = dataset.length - 1; i >= 0; i--) {
     allViolationCodes.push(dataset[i][arrayIndex]);
   }
@@ -55,10 +58,7 @@ module.exports = function movingAnalyzer(month, year) {
 
   let totalUniqueViolationCodes = (Object.keys(counts)).length;
 
-  // copy the calculated answer for Question #1 to the results object
-  calculatedResults.totalUniqueViolationCodes = totalUniqueViolationCodes;
-
-  // Question 2:  What was the most common violation type for a moving ticket?
+  // Question 1:  What was the most common violation type for a moving violation?
   // first, create an array with the property names
   let vcNames = Object.keys(counts);
 
@@ -91,7 +91,36 @@ module.exports = function movingAnalyzer(month, year) {
   );
   calculatedResults.mostCommonViolationType = arrayOfHighest;
 
-  // Question 3:  skip the license plates for moving data per instructor
+  // Question 2:  skip the "What state license plate gets the most tickets?" per instructor
+
+  //
+  // Question 3: "What is the average fine amount?"
+  //
+  // store all fine amounts into an array
+  let allFines = [];
+  let fineIndex = 10; // the index for the FINEAMT
+  for (let i = dataset.length - 1; i >= 0; i--) {
+    allFines.push(dataset[i][fineIndex]);
+  }
+
+  // calculate the average
+  
+
+
+  // // then create a count array to store the totals for each unique violation code
+  // let counts = {};
+  // for (let i = allViolationCodes.length - 1; i >= 0; i--) {
+  //     let index = allViolationCodes[i]; // track which violation code we're currently looking at
+  //     // if we've already counted this violation code, add one to the total,
+  //     // otherwise, add a new property for that count and set the value to one
+  //     counts[index] = counts[index] ? counts[index] + 1 : 1;
+  // }
+  //
+  // let totalUniqueViolationCodes = (Object.keys(counts)).length;
+
+
+
+
 
   return calculatedResults;
 };

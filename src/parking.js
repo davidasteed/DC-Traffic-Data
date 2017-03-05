@@ -13,7 +13,7 @@ module.exports = function parkingAnalyzer(month, year) {
   // let validParkingFiles = ["parking_jan_2016.csv", "parking_feb_2016.csv", "parking_mar_2016.csv",
   //                       "parking_april_2016.csv", "parking_may_2016.csv"];
   //
-  let validParkingFiles = ["./simple_data/parking_feb_2016.csv"];
+  let validParkingFiles = ["./data/parking_feb_2016.csv"];
 
   // determine what input file to ask for
   let requestedDatafile;
@@ -91,7 +91,56 @@ module.exports = function parkingAnalyzer(month, year) {
   );
   calculatedResults.mostCommonViolationType = arrayOfHighest;
 
-  // Question 3:  skip the license plates for parking data per instructor
+
+  // Question 3:  What state license plate gets the most tickets?
+  // first, loop over the dataset and extract the property string values, and
+  // store into their own array
+  let allStates = [];
+  let stateIndex = 12; // index of the RP_PLATE_STATE
+  for (let i = dataset.length - 1; i >= 0; i--) {
+    allStates.push(dataset[i][stateIndex]);
+  }
+
+  // then create a count array to store the totals for each unique violation code
+  let stateCount = {};
+  for (let i = allStates.length - 1; i >= 0; i--) {
+      let index = allStates[i]; // track which violation code we're currently looking at
+      // if we've already counted this violation code, add one to the total,
+      // otherwise, add a new property for that count and set the value to one
+      stateCount[index] = stateCount[index] ? stateCount[index] + 1 : 1;
+  }
+
+  // first, create an array with the property names
+  let stateNames = Object.keys(stateCount);
+
+  // copy the totals into an array
+  let stateCounts = [];
+  stateNames.forEach(
+    function copyValue(property){
+      stateCounts.push(stateCount[property]);
+    }
+  );
+
+  // determine the highest count of Violation codes
+  let highestPlateValue = Math.max(...stateCounts);
+
+  // determine which array indexes contain the highest value:
+  let stateMatchingIndexes = []
+  for (let i = stateCounts.length; i >= 0; i--) {
+    if (stateCounts[i] == highestPlateValue) {
+      stateMatchingIndexes.push(i);
+    }
+  }
+
+  // copy the property/value for the highest value into the results object
+  let arrayOfHighestStates = [];
+
+  stateMatchingIndexes.forEach(
+    function copyHighest(i){
+      arrayOfHighestStates.push(stateNames[i])
+    }
+  );
+  calculatedResults.arrayOfHighestStates = arrayOfHighestStates;
 
   return calculatedResults;
 };
