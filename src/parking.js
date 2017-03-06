@@ -7,23 +7,32 @@ module.exports = function parkingAnalyzer(month, year) {
 
   // obtain a dataset to analyze, based on the requested search criteria:
   // first, create a list of valid data files for input
-  let validMonth = [ "January", "February", "March", "April", "May" ];
+  let validMonth = [ "january", "february", "march", "april", "may" ];
 
   // NOTE NOTE NOTE:  replace with the real parking files
-  // let validParkingFiles = ["parking_jan_2016.csv", "parking_feb_2016.csv", "parking_mar_2016.csv",
-  //                       "parking_april_2016.csv", "parking_may_2016.csv"];
-  //
-  let validParkingFiles = ["./simple_data/parking_feb_2016.csv"];
+  let validParkingFiles = ["./data/parking_jan_2016.csv", "./data/parking_feb_2016.csv",
+                           "./data/parking_mar_2016.csv", "./data/parking_april_2016.csv",
+                           "./data/parking_may_2016.csv"];
+
+  // let validParkingFiles = ["./simple_data/parking_feb_2016.csv"];
 
   // determine what input file to ask for
   let requestedDatafile;
-  validMonth.forEach(
-    function getFileName() {
-      if (month === "February"){
-        requestedDatafile = validParkingFiles[0];
-      }
+
+  // change month to lowercase
+  month = month.toLowerCase();
+
+  if (month === validMonth[0]) {
+    requestedDatafile = validParkingFiles[0];
+    } else if (month === validMonth[1]) {
+    requestedDatafile = validParkingFiles[1];
+    } else if (month === validMonth[2]) {
+      requestedDatafile = validParkingFiles[2];
+    } else if (month === validMonth[3]) {
+      requestedDatafile = validParkingFiles[3];
+    } else {
+      requestedDatafile = validParkingFiles[4];
     }
-  );
 
   // obtain and return the requested data file
   dataset = parse(requestedDatafile);
@@ -31,9 +40,13 @@ module.exports = function parkingAnalyzer(month, year) {
   // strip out the subarray that contains the labels
   dataset.splice(0, 1);
 
-  // NOTE:  It is unknown why I have a empty subarray at the end of the parking array
-  //        Deleting the last (and empty) subarray from the parking array
-  dataset.splice(dataset.length - 1, 1);
+  // strip out the subarray at the end *if* it appears to be empty
+  // NOTE:  for whatever reason, the evaluation:
+  //            "if (dataet[dataset.length - 1] === ("" || undefined)
+  //        ...failed to match, so it was necessary to look into the inner array's first element.
+  if (dataset[dataset.length - 1][0] === "") {
+    dataset.splice(dataset.length - 1, 1);
+  }
 
   // Question 1:  "How many different types of parking tickets were issued?"
   // first, loop over the dataset and extract the property string values, and
@@ -76,7 +89,7 @@ module.exports = function parkingAnalyzer(month, year) {
   // determine which array indexes contain the highest value:
   let matchingIndexes = []
   for (let i = vcValues.length; i >= 0; i--) {
-    if (vcValues[i] == highestValue) {
+    if (vcValues[i] === highestValue) {
       matchingIndexes.push(i);
     }
   }

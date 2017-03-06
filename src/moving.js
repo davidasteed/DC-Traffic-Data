@@ -7,15 +7,21 @@ module.exports = function movingAnalyzer(month, year) {
 
   // obtain a dataset to analyze, based on the requested search criteria:
   // first, create a list of valid data files for input
-  let validMonth = [ "January", "February", "March", "April", "May" ];
+  let validMonth = [ "january", "february", "march", "april", "may" ];
 
   let validMovingFiles = ["./data/moving_jan_2016.csv", "./data/moving_feb_2016.csv",
                           "./data/moving_mar_2016.csv", "./data/moving_april_2016.csv",
                           "./data/moving_may_2016.csv"];
 
+  // // NOTE: testing
+  // let validMovingFiles = ["./simple_data/moving_jan_2016.csv"]
+
   // determine what input file to ask for
   let requestedDatafile;
 
+  // change month to lowercase
+  month = month.toLowerCase();
+  
   if (month === validMonth[0]) {
     requestedDatafile = validMovingFiles[0];
     } else if (month === validMonth[1]) {
@@ -33,6 +39,14 @@ module.exports = function movingAnalyzer(month, year) {
 
   // strip out the subarray that contains the labels
   dataset.splice(0, 1);
+
+  // strip out the subarray at the end *if* it appears to be empty
+  // NOTE:  for whatever reason, the evaluation:
+  //            "if (dataet[dataset.length - 1] === ("" || undefined)
+  //        ...failed to match, so it was necessary to look into the inner array's first element.
+  if (dataset[dataset.length - 1][0] === "") {
+    dataset.splice(dataset.length - 1, 1);
+  }
 
   //
   // pre-work to answer question 1:
@@ -106,7 +120,10 @@ module.exports = function movingAnalyzer(month, year) {
   let sumFines = 0;
   allFines.forEach(
     function getAverage(oneFine){
+      // don't write empty values
+      if (oneFine) {
       sumFines += parseInt(oneFine);
+      }
     }
   );
   let averageFines = sumFines / allFines.length;
@@ -139,7 +156,9 @@ module.exports = function movingAnalyzer(month, year) {
   let sumAllFines = 0;
   dataset.forEach(
     function addAllFines(row) {
-      sumAllFines += parseInt(row[vcFineIndex]);
+      if (row[vcFineIndex]) {
+        sumAllFines += parseInt(row[vcFineIndex]);
+      }
     }
   );
 

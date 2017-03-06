@@ -6,14 +6,14 @@ let moving = require("./moving.js");
 // extract and store the command line options, if any.
 let argument1, argument2;
 if (process.argv[2]) {
-  argument1 = process.argv[2];
+  argument1 = process.argv[2].toString();
 } else {
   console.log("Please enter a month value that is contained in the dataset");
   return;
 }
 
 if (process.argv[3]) {
-  argument2 = process.argv[3];
+  argument2 = process.argv[3].toString();
 } else {
   console.log("Please enter a year value that is contained in the dataset");
   return;
@@ -60,14 +60,31 @@ if (argument2 !== validYear) {
    NOTE: command-line arguments are now considered valid */
 
 // obtain the parking results:
-// let parkingCalculate = parking;
-// let parkingResults = parkingCalculate(argument1, argument2);
+let parkingCalculate = parking;
+let parkingResults = parkingCalculate(argument1, argument2);
 
 // obtain the moving results:
 let movingCalculate = moving;
 let movingResults = movingCalculate(argument1, argument2);
-// //
-//
-// // NOTE: testing
-// console.log("Parking results are: ", parkingResults);
-console.log("Moving results are: ", movingResults);
+
+// output
+console.log("\n");
+console.log("For", argument1, argument2,"-");
+
+console.log("Parking Tickets:");
+
+console.log("\tDifferent types of parking tickets were issued = ", parkingResults.totalUniqueViolationCodes);
+
+console.log("\tMost common violation type for a parking ticket = ", parkingResults.mostCommonViolationType[0]);
+
+console.log("\tState license plate getting the most tickets = ", parkingResults.arrayOfHighestStates[0]);
+
+console.log("Moving Violations:");
+
+console.log("\tMost common violation type for a moving violation: ", movingResults.mostCommonViolationType[0]);
+
+console.log("\tAverage fine amount: $", movingResults.averageFines.toFixed(2));
+
+console.log("\tTotal income from photo citations: $", movingResults.incomePhotoCitations.toLocaleString());
+
+console.log("\tTotal income from all moving violations: $", movingResults.movingViolationIncome.toLocaleString());
